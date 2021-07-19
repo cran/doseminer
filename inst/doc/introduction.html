@@ -23,6 +23,7 @@
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
@@ -132,7 +133,7 @@ a.sourceLine {
 <div class="cover-card table-cell table-middle">
 <span class="author_name">Introduction to doseminer</span>
 <span class="author_bio mbm">David Selby and Belay Birlie Yimer</span>
-<span class="author_bio mbm">April 2021</span>
+<span class="author_bio mbm">July 2021</span>
 </div>
 </div>
 </div>
@@ -160,19 +161,9 @@ a.sourceLine {
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">extract_from_prescription</span>(p1)</span></code></pre></div>
 <div class="kable-table">
 <table>
-<colgroup>
-<col width="56%" />
-<col width="12%" />
-<col width="5%" />
-<col width="5%" />
-<col width="5%" />
-<col width="5%" />
-<col width="9%" />
-</colgroup>
 <thead>
 <tr class="header">
 <th align="left">raw</th>
-<th align="left">output</th>
 <th align="left">freq</th>
 <th align="left">itvl</th>
 <th align="left">dose</th>
@@ -183,7 +174,6 @@ a.sourceLine {
 <tbody>
 <tr class="odd">
 <td align="left">Take 1 or 2 tablets up to 3 times a day, as required</td>
-<td align="left">1 - 2 tab ,</td>
 <td align="left">0-3</td>
 <td align="left">1</td>
 <td align="left">1-2</td>
@@ -200,8 +190,7 @@ a.sourceLine {
 <li><code>unit</code>: the units of <code>dose</code> (may be unspecified)</li>
 <li><code>freq</code>: the number of times per day that the dose should be administered</li>
 <li><code>itvl</code>: the number of days between ‘dose days’; if every day, then 1</li>
-<li><code>optional</code>: an indicator; can the dose be zero? If so, 1, else 0.</li>
-<li><code>output</code>: a ‘residual’ string of text not parsed by the algorithm. Useful for debugging. May be omitted in future releases.</li>
+<li><code>optional</code>: an indicator; can the dose be zero? If so, 1, else 0. <!--- `output`: a 'residual' string of text not parsed by the algorithm. Useful for debugging. May be omitted in future releases.--></li>
 </ul>
 <p>The package is vectorised, so you can provide a vector and it should process all of it, returning the result in the same order as the input.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;Take 1 or 2 tablets up to 3 times a day, as required&#39;</span>,</span>
@@ -211,18 +200,16 @@ a.sourceLine {
 <div class="kable-table">
 <table>
 <colgroup>
-<col width="52%" />
-<col width="21%" />
-<col width="3%" />
-<col width="3%" />
+<col width="66%" />
 <col width="4%" />
+<col width="4%" />
+<col width="5%" />
+<col width="10%" />
 <col width="8%" />
-<col width="6%" />
 </colgroup>
 <thead>
 <tr class="header">
 <th align="left">raw</th>
-<th align="left">output</th>
 <th align="left">freq</th>
 <th align="left">itvl</th>
 <th align="left">dose</th>
@@ -233,7 +220,6 @@ a.sourceLine {
 <tbody>
 <tr class="odd">
 <td align="left">Take 1 or 2 tablets up to 3 times a day, as required</td>
-<td align="left">1 - 2 tab ,</td>
 <td align="left">0-3</td>
 <td align="left">1</td>
 <td align="left">1-2</td>
@@ -242,7 +228,6 @@ a.sourceLine {
 </tr>
 <tr class="even">
 <td align="left">Swallow 1 or 2 capsules with water, up to three times a day as required.</td>
-<td align="left">swallow 1 - 2 cap with water,</td>
 <td align="left">0-3</td>
 <td align="left">1</td>
 <td align="left">1-2</td>
@@ -251,7 +236,6 @@ a.sourceLine {
 </tr>
 <tr class="odd">
 <td align="left">Two to four 5ml spoonfuls up to 4 times a day</td>
-<td align="left">2 - 4 x 5 ml spoonful</td>
 <td align="left">0-4</td>
 <td align="left">1</td>
 <td align="left">10-20</td>
@@ -271,7 +255,6 @@ a.sourceLine {
 <thead>
 <tr class="header">
 <th align="left">raw</th>
-<th align="left">output</th>
 <th align="right">freq</th>
 <th align="right">itvl</th>
 <th align="right">dose</th>
@@ -282,7 +265,6 @@ a.sourceLine {
 <tbody>
 <tr class="odd">
 <td align="left">Take 1 or 2 tablets up to 3 times a day, as required</td>
-<td align="left">1 - 2 tab ,</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="right">1</td>
@@ -291,7 +273,6 @@ a.sourceLine {
 </tr>
 <tr class="even">
 <td align="left">Take 1 or 2 tablets up to 3 times a day, as required</td>
-<td align="left">1 - 2 tab ,</td>
 <td align="right">3</td>
 <td align="right">1</td>
 <td align="right">2</td>
@@ -304,20 +285,18 @@ a.sourceLine {
 <p>Here are some more example prescriptions and their output.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">extract_from_prescription</span>(example_prescriptions)</span></code></pre></div>
 <div class="kable-table">
-<table>
+<table style="width:100%;">
 <colgroup>
-<col width="44%" />
-<col width="29%" />
-<col width="3%" />
-<col width="3%" />
-<col width="3%" />
-<col width="8%" />
-<col width="6%" />
+<col width="63%" />
+<col width="5%" />
+<col width="5%" />
+<col width="5%" />
+<col width="12%" />
+<col width="9%" />
 </colgroup>
 <thead>
 <tr class="header">
 <th align="left">raw</th>
-<th align="left">output</th>
 <th align="left">freq</th>
 <th align="left">itvl</th>
 <th align="left">dose</th>
@@ -328,7 +307,6 @@ a.sourceLine {
 <tbody>
 <tr class="odd">
 <td align="left">1 tablet to be taken daily</td>
-<td align="left">1 tab to be taken</td>
 <td align="left">1</td>
 <td align="left">1</td>
 <td align="left">1</td>
@@ -337,7 +315,6 @@ a.sourceLine {
 </tr>
 <tr class="even">
 <td align="left">2.5ml four times a day when required</td>
-<td align="left">2.5 ml</td>
 <td align="left">4</td>
 <td align="left">1</td>
 <td align="left">2.5</td>
@@ -346,7 +323,6 @@ a.sourceLine {
 </tr>
 <tr class="odd">
 <td align="left">1.25mls three times a day</td>
-<td align="left">1.25 ml</td>
 <td align="left">3</td>
 <td align="left">1</td>
 <td align="left">1.25</td>
@@ -355,7 +331,6 @@ a.sourceLine {
 </tr>
 <tr class="even">
 <td align="left">take 10mls q.d.s. p.r.n.</td>
-<td align="left">10 ml</td>
 <td align="left">1</td>
 <td align="left">1</td>
 <td align="left">10</td>
@@ -364,7 +339,6 @@ a.sourceLine {
 </tr>
 <tr class="odd">
 <td align="left">take 1 or 2 4 times/day</td>
-<td align="left">1 - 2</td>
 <td align="left">4</td>
 <td align="left">1</td>
 <td align="left">1-2</td>
@@ -373,7 +347,6 @@ a.sourceLine {
 </tr>
 <tr class="even">
 <td align="left">2x5ml spoon 4 times/day</td>
-<td align="left">2 x 5 ml spoonful</td>
 <td align="left">4</td>
 <td align="left">1</td>
 <td align="left">10</td>
@@ -382,7 +355,6 @@ a.sourceLine {
 </tr>
 <tr class="odd">
 <td align="left">take 2 tablets every six hours max eight in twenty four hours</td>
-<td align="left">2 tab 0 - 8 in 24 hours</td>
 <td align="left">4</td>
 <td align="left">1</td>
 <td align="left">2</td>
@@ -391,7 +363,6 @@ a.sourceLine {
 </tr>
 <tr class="even">
 <td align="left">1 tab nocte twenty eight tablets</td>
-<td align="left">1 tab 28 tab</td>
 <td align="left">1</td>
 <td align="left">1</td>
 <td align="left">1</td>
@@ -400,7 +371,6 @@ a.sourceLine {
 </tr>
 <tr class="odd">
 <td align="left">1-2 four times a day when required</td>
-<td align="left">1 - 2</td>
 <td align="left">4</td>
 <td align="left">1</td>
 <td align="left">1-2</td>
@@ -409,7 +379,6 @@ a.sourceLine {
 </tr>
 <tr class="even">
 <td align="left">take one twice daily</td>
-<td align="left">1</td>
 <td align="left">2</td>
 <td align="left">1</td>
 <td align="left">1</td>
@@ -418,7 +387,6 @@ a.sourceLine {
 </tr>
 <tr class="odd">
 <td align="left">1 q4h prn</td>
-<td align="left">1</td>
 <td align="left">6</td>
 <td align="left">1</td>
 <td align="left">1</td>
@@ -427,7 +395,6 @@ a.sourceLine {
 </tr>
 <tr class="even">
 <td align="left">take two every three days</td>
-<td align="left">2</td>
 <td align="left">1</td>
 <td align="left">3</td>
 <td align="left">2</td>
@@ -436,7 +403,6 @@ a.sourceLine {
 </tr>
 <tr class="odd">
 <td align="left">five every week</td>
-<td align="left">5</td>
 <td align="left">1</td>
 <td align="left">7</td>
 <td align="left">5</td>
@@ -445,7 +411,6 @@ a.sourceLine {
 </tr>
 <tr class="even">
 <td align="left">every 72 hours</td>
-<td align="left"></td>
 <td align="left">1</td>
 <td align="left">3</td>
 <td align="left"></td>
@@ -454,7 +419,6 @@ a.sourceLine {
 </tr>
 <tr class="odd">
 <td align="left">1 x 5 ml spoon 4 / day for 10 days</td>
-<td align="left">1 x 5 ml spoonful for 10 days</td>
 <td align="left">4</td>
 <td align="left">1</td>
 <td align="left">5</td>
@@ -463,7 +427,6 @@ a.sourceLine {
 </tr>
 <tr class="even">
 <td align="left">two to three times a day</td>
-<td align="left"></td>
 <td align="left">2-3</td>
 <td align="left">1</td>
 <td align="left"></td>
@@ -472,7 +435,6 @@ a.sourceLine {
 </tr>
 <tr class="odd">
 <td align="left">three times a week</td>
-<td align="left"></td>
 <td align="left">1</td>
 <td align="left">2-3</td>
 <td align="left"></td>
@@ -481,7 +443,6 @@ a.sourceLine {
 </tr>
 <tr class="even">
 <td align="left">three 5ml spoonsful to be taken four times a day after food</td>
-<td align="left">3 x 5 ml spoonful to be taken after food</td>
 <td align="left">4</td>
 <td align="left">1</td>
 <td align="left">15</td>
@@ -490,7 +451,6 @@ a.sourceLine {
 </tr>
 <tr class="odd">
 <td align="left">take one or two every 4-6 hrs</td>
-<td align="left">1 - 2</td>
 <td align="left">4-6</td>
 <td align="left">1</td>
 <td align="left">1-2</td>
@@ -499,7 +459,6 @@ a.sourceLine {
 </tr>
 <tr class="even">
 <td align="left">5ml 3 hrly when required</td>
-<td align="left">5 ml</td>
 <td align="left">8</td>
 <td align="left">1</td>
 <td align="left">5</td>
@@ -508,7 +467,6 @@ a.sourceLine {
 </tr>
 <tr class="odd">
 <td align="left">one every morning to reduce bp</td>
-<td align="left">1 to reduce bp</td>
 <td align="left">1</td>
 <td align="left">1</td>
 <td align="left">1</td>
@@ -517,7 +475,6 @@ a.sourceLine {
 </tr>
 <tr class="even">
 <td align="left">take 1 or 2 6hrly when required</td>
-<td align="left">1 - 2</td>
 <td align="left">4</td>
 <td align="left">1</td>
 <td align="left">1-2</td>
@@ -526,7 +483,6 @@ a.sourceLine {
 </tr>
 <tr class="odd">
 <td align="left">take 1 or 2 four times a day as required for pain</td>
-<td align="left">1 - 2 for pain</td>
 <td align="left">4</td>
 <td align="left">1</td>
 <td align="left">1-2</td>
@@ -535,7 +491,6 @@ a.sourceLine {
 </tr>
 <tr class="even">
 <td align="left">take 1 or 2 4 times/day if needed for pain</td>
-<td align="left">1 - 2 for pain</td>
 <td align="left">4</td>
 <td align="left">1</td>
 <td align="left">1-2</td>
@@ -544,7 +499,6 @@ a.sourceLine {
 </tr>
 <tr class="odd">
 <td align="left">1-2 tablets up to four times daily</td>
-<td align="left">1 - 2 tab</td>
 <td align="left">0-4</td>
 <td align="left">1</td>
 <td align="left">1-2</td>
@@ -553,7 +507,6 @@ a.sourceLine {
 </tr>
 <tr class="even">
 <td align="left">take one or two tablets 6-8 hrly every 2-3 days</td>
-<td align="left">1 - 2 tab</td>
 <td align="left">3-4</td>
 <td align="left">2-3</td>
 <td align="left">1-2</td>
@@ -562,7 +515,6 @@ a.sourceLine {
 </tr>
 <tr class="odd">
 <td align="left">one and a half tablets every three hours</td>
-<td align="left">1.5 tab</td>
 <td align="left">8</td>
 <td align="left">1</td>
 <td align="left">1.5</td>
